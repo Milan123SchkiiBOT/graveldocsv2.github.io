@@ -249,6 +249,23 @@ th {
   50% { transform: translateY(-300px) scale(1.1); opacity: 0.3; }
   100% { transform: translateY(0) scale(1); opacity: 0.1; }
 }
+@media (max-width: 480px) {
+  .code-box {
+    padding-top: 3rem;
+  }
+
+  .copy-btn,
+  .download-btn {
+    top: 0.3rem;
+    right: unset;
+    left: 0.5rem;
+    margin-top: 0.3rem;
+    font-size: 1rem;
+    position: relative;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+}
 
   </style>
 </head>
@@ -304,18 +321,29 @@ th {
           <tr><td>PlayerUtils.forceSneak(player)</td><td>Forces sneaking</td></tr>
           <tr><td>PlayerUtils.respawn(player)</td><td>Force player respawn</td></tr>
           <tr><td>PlayerUtils.getLookingBlock(player, maxDistance)</td><td>Block player is looking at</td></tr>
+          <tr><td>Player.onJoin(callback)</td><td>If player joins</td></tr>
+          <tr><td>Player.onHit(callback)</td><td>player hit</td></tr>
+          <tr><td>Player.onLeave(callback)</td><td>If the player leave</td></tr>
         </table>
       </section>
-
+      <section class="docs-section">
+        <h2>📚 EntityUtils.js</h2>
+        <table>
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td>EntityEvents.Spawn("minecraft:entity", (z) => { ... })</td><td>If Entity Spawn</td></tr>
+          <tr><td>EntityEvents.Hurt("minecraft:entity", (z) => { ... })</td><td>If Entity Hurt/Hit</td></tr>
+          <tr><td>EntityEvents.Death("minecraft:entity", (z) => { ... })</td><td>If Entity Death</td></tr>
+        </table>
+      </section>
       <section class="docs-section">
         <h2>📦 InventoryUtils.js</h2>
         <table>
-          <tr><th>Function</th><th>Description</th></tr>
-          <tr><td>clear(player)</td><td>Clears player inventory</td></tr>
-          <tr><td>replaceItem(player, slot, itemStack)</td><td>Replaces item in slot</td></tr>
-          <tr><td>getAll(player)</td><td>Returns all inventory items</td></tr>
-          <tr><td>count(player, typeId)</td><td>Counts specific item</td></tr>
-          <tr><td>remove(player, typeId, amount)</td><td>Removes item amount</td></tr>
+          <tr><th>InventoryUtils.Function</th><th>Description</th></tr>
+          <tr><td>InventoryUtils.clear(player)</td><td>Clears player inventory</td></tr>
+          <tr><td>InventoryUtils.replaceItem(player, slot, itemStack)</td><td>Replaces item in slot</td></tr>
+          <tr><td>InventoryUtils.getAll(player)</td><td>Returns all inventory items</td></tr>
+          <tr><td>InventoryUtils.count(player, typeId)</td><td>Counts specific item</td></tr>
+          <tr><td>InventoryUtils.remove(player, typeId, amount)</td><td>Removes item amount</td></tr>
         </table>
       </section>
 
@@ -324,10 +352,10 @@ th {
         <table>
           <tr><th>Event</th><th>Description</th></tr>
           <tr><td>onTimeChange(cb)</td><td>Triggered when time changes</td></tr>
-          <tr><td>onRainStart(cb)</td><td>Triggered on rain start</td></tr>
+          <tr><td>WorldEvents.onRainStart((z) => {})</td><td>Triggered on rain start</td></tr>
           <tr><td>onRainStop(cb)</td><td>Triggered on rain stop</td></tr>
-          <tr><td>onExplosion(cb)</td><td>Triggered on explosion</td></tr>
-          <tr><td>onLightning(cb)</td><td>Triggered on lightning</td></tr>
+          <tr><td>WorldEvents.onExplosion((z) => {})</td><td>Triggered on explosion</td></tr>
+          <tr><td>WorldEvents.onLightning((z) => {})</td><td>Triggered on lightning</td></tr>
         </table>
       </section>
 
@@ -353,8 +381,6 @@ th {
         <table>
           <tr><th>Module</th><th>Features</th></tr>
           <tr><td>BlockUtils.js</td><td>Fake blocks, safezones, auto-replace</td></tr>
-          <tr><td>EntityUtils.js</td><td>Auto-follow, glow, name highlights</td></tr>
-          <tr><td>UIEditor.js</td><td>Drag & Drop GUI Builder</td></tr>
         </table>
       </section>
 
