@@ -11,6 +11,85 @@
   padding: 0;
   box-sizing: border-box;
 }
+body.dark {
+  background: #0a0a0a;
+  color: #e0e0e0;
+}
+body.dark table,
+body.dark th,
+body.dark td {
+  border: 1px solid #444;
+}
+
+body.dark th {
+  background: #1e1e1e;
+  color: #76baff;
+}
+
+body.dark td {
+  background: #111;
+  color: #ddd;
+}
+
+body.dark .sidebar {
+  background: #111;
+  border-color: #333;
+}
+
+body.dark .repo-box,
+body.dark .docs-section,
+body.dark .code-box {
+  background: #111;
+  border-color: #333;
+  color: #e0e0e0;
+}
+
+body.dark header {
+  background: #0f0f0fdd;
+  border-bottom: 1px solid #333;
+}
+
+body.dark a {
+  color: #76baff;
+}
+
+body.dark .entry i,
+body.dark .material-icons {
+  color: #76baff;
+}
+
+body.dark .notice.warning {
+  background-color: #3c2f00;
+  border-color: #ffb300;
+  color: #fff3cd;
+}
+
+body.dark .notice.tip {
+  background-color: #1b3b1b;
+  border-color: #66bb6a;
+  color: #dcedc8;
+}
+body.dark .entry {
+  border-bottom: 1px solid #333;
+  color: #ddd;
+}
+
+body.dark .entry span i {
+  color: #76baff;
+}
+
+body.dark .notice.info {
+  background-color: #0d47a1;
+  border-color: #42a5f5;
+  color: #bbdefb;
+}
+
+body.dark .notice.error {
+  background-color: #4f1c1c;
+  border-color: #ef5350;
+  color: #ffcdd2;
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
   background: #f0f9ff;
@@ -30,7 +109,11 @@ body::after {
   z-index: 0;
   opacity: 0.25;
   pointer-events: none;
+  border-top-left-radius: 100% 40%;
+  border-top-right-radius: 100% 40%;
+  animation-direction: reverse;
 }
+
 
 @keyframes waveLoopReverse {
   0% { transform: translateX(0); }
@@ -48,7 +131,10 @@ body::after {
   border-top-right-radius: 100% 40%;
   animation-direction: reverse;
 }
-
+body::after,
+body.dark::after {
+  animation: waveLoopReverse 12s ease-in-out infinite;
+}
 @keyframes waveMove {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
@@ -305,6 +391,35 @@ th {
   border-color: #ef5350;
   color: #c62828;
 }
+#themeToggle {
+  background-color: #ffffff;
+  color: #0288d1;
+  border: 2px solid #b3e5fc;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#themeToggle:hover {
+  background-color: #e1f5fe;
+  color: #01579b;
+}
+
+/* Darkmode Style */
+body.dark #themeToggle {
+  background-color: #222;
+  color: #76baff;
+  border-color: #444;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+body.dark #themeToggle:hover {
+  background-color: #333;
+  color: #b3d9ff;
+}
 
   </style>
 </head>
@@ -320,10 +435,11 @@ th {
   <header>
     <h1>GravelScript Library</h1>
     <nav>
-      <a href="#">Home</a>
-      <a href="#">Docs</a>
-      <a href="#">Download</a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
     </nav>
+    <button id="themeToggle" title="Toggle Theme">🌞</button>
   </header>
   <div class="layout">
     <aside class="sidebar">
@@ -515,6 +631,22 @@ world.afterEvents.itemUse.subscribe(event => {
       bubble.style.top = Math.random() * 100 + 'vh';
       document.body.appendChild(bubble);
     }
+    const toggleBtn = document.getElementById('themeToggle');
+  const body = document.body;
+
+  // Beim Laden: gespeichertes Theme anwenden
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark');
+    toggleBtn.textContent = '🌙';
+  }
+
+  // Beim Klicken: Theme umschalten
+  toggleBtn.addEventListener('click', () => {
+    const isDark = body.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    toggleBtn.textContent = isDark ? '🌙' : '🌞';
+  });
   </script>
 </body>
 </html>
