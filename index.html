@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GravelScript Docs</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f9ff;
+  color: #222;
+  overflow-x: hidden;
+  position: relative;
+}
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 180px;
+  width: 200%;
+  background: radial-gradient(circle at 50% 0%, #00aeff 15%, #00aeff 70%);
+  animation: waveLoopReverse 18s linear infinite;
+  z-index: 0;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+@keyframes waveLoopReverse {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+body::before {
+  top: 0;
+  border-bottom-left-radius: 100% 40%;
+  border-bottom-right-radius: 100% 40%;
+}
+body::after {
+  bottom: 0;
+  border-top-left-radius: 100% 40%;
+  border-top-right-radius: 100% 40%;
+  animation-direction: reverse;
+}
+
+@keyframes waveMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: #ffffffee;
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border-bottom: 1px solid #d0eafc;
+}
+header h1 {
+  font-size: 1.6rem;
+  color: #0288d1;
+}
+nav a {
+  color: #444;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+nav a:hover {
+  color: #0288d1;
+}
+.layout {
+  display: flex;
+  margin-top: 80px;
+  position: relative;
+  z-index: 1;
+}
+.sidebar {
+  width: 260px;
+  background: #e1f5fe;
+  padding: 2rem 1rem;
+  border-right: 1px solid #b3e5fc;
+  height: calc(100vh - 80px);
+  position: sticky;
+  top: 80px;
+  overflow-y: auto;
+}
+.sidebar h3 {
+  color: #0288d1;
+  margin-bottom: 1.5rem;
+}
+.sidebar ul {
+  list-style: none;
+}
+.sidebar li {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s;
+}
+.sidebar li:hover {
+  background: #b3e5fc;
+  color: #01579b;
+}
+.material-icons {
+  font-size: 18px;
+  color: #0288d1;
+}
+.content {
+  flex: 1;
+  padding: 2rem 3rem;
+  display: grid;
+  gap: 2rem;
+}
+.repo-box, .docs-section {
+  background: #ffffff;
+  border: 1px solid #d0eafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.repo-header h2 {
+  font-size: 1.2rem;
+  color: #0277bd;
+}
+.entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e3f2fd;
+}
+.entry:last-child {
+  border-bottom: none;
+}
+.entry span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.entry i {
+  color: #0288d1;
+}
+
+.download {
+  background: linear-gradient(to right, #29b6f6, #0288d1);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.download:hover {
+  background: linear-gradient(to right, #0288d1, #29b6f6);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+table, th, td {
+  border: 1px solid #cbe7fb;
+}
+th, td {
+  padding: 0.6rem;
+  text-align: left;
+}
+th {
+  background: #e1f5fe;
+  color: #0288d1;
+}
+.code-box {
+  background: #ffffff;
+  border: 1px solid #cbe7fb;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-family: Consolas, monospace;
+  overflow-x: auto;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.code-box code {
+  font-size: 14px;
+  color: #0d47a1;
+}
+
+.copy-btn,
+.download-btn {
+  position: absolute;
+  top: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.copy-btn {
+  right: 0.5rem;
+  color: #0288d1;
+}
+
+.copy-btn:hover {
+  background: #e0f7fa;
+  color: #01579b;
+}
+
+.download-btn {
+  right: 2.5rem;
+  color: #4caf50;
+}
+
+.download-btn:hover {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 188, 212, 0.12);
+  animation: float 30s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity: 0.1; }
+  50% { transform: translateY(-300px) scale(1.1); opacity: 0.3; }
+  100% { transform: translateY(0) scale(1); opacity: 0.1; }
+}
+
+  </style>
+</head>
+<body>
+    <script>
+        function copyToClipboard(text) {
+          navigator.clipboard.writeText(text).then(() => {
+            alert("Copied to clipboard");
+          });
+        }
+      </script>
+      
+  <header>
+    <h1>GravelScript Library</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Docs</a>
+      <a href="#">Download</a>
+    </nav>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <h3>Sections</h3>
+      <ul>
+        <li><i class="material-icons">folder</i> Player Features</li>
+        <li><i class="material-icons">folder</i> Player Utils</li>
+        <li><i class="material-icons">folder</i> Inventory Utils</li>
+        <li><i class="material-icons">folder</i> World Events</li>
+        <li><i class="material-icons">folder</i> UI Builder</li>
+        <li><i class="material-icons">folder</i> UI Storage</li>
+        <li><i class="material-icons">folder</i> Coming Soon</li>
+      </ul>
+    </aside>
+    <main class="content">
+      <section class="repo-box">
+        <div class="repo-header">
+          <h2>📁 GravelLib Folder</h2>
+          <a href="./GravelLib.zip" download><button class="download-btn">Download Folder</button></a>
+        </div>
+        <div class="entry"><span><i class="material-icons">folder</i> builder/</span></div>
+        <div class="entry"><span><i class="material-icons">folder</i> formLib/</span></div>
+        <div class="entry"><span><i class="material-icons">folder</i> player/</span></div>
+        <div class="entry"><span><i class="material-icons">folder</i> Utils/</span></div>
+       
+      </section>
+      <section class="docs-section">
+        <h2>📚 PlayerUtils.js</h2>
+        <table>
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td>getHeldItem(player)</td><td>Returns the held item</td></tr>
+          <tr><td>hasItem(player, typeId, amount?)</td><td>Check if player has item</td></tr>
+          <tr><td>disableJump(player)</td><td>Prevents jumping</td></tr>
+          <tr><td>forceSneak(player)</td><td>Forces sneaking</td></tr>
+          <tr><td>respawn(player)</td><td>Force player respawn</td></tr>
+          <tr><td>getLookingBlock(player, maxDistance)</td><td>Block player is looking at</td></tr>
+        </table>
+      </section>
+
+      <section class="docs-section">
+        <h2>📦 InventoryUtils.js</h2>
+        <table>
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td>clear(player)</td><td>Clears player inventory</td></tr>
+          <tr><td>replaceItem(player, slot, itemStack)</td><td>Replaces item in slot</td></tr>
+          <tr><td>getAll(player)</td><td>Returns all inventory items</td></tr>
+          <tr><td>count(player, typeId)</td><td>Counts specific item</td></tr>
+          <tr><td>remove(player, typeId, amount)</td><td>Removes item amount</td></tr>
+        </table>
+      </section>
+
+      <section class="docs-section">
+        <h2>🌍 WorldEvents.js</h2>
+        <table>
+          <tr><th>Event</th><th>Description</th></tr>
+          <tr><td>onTimeChange(cb)</td><td>Triggered when time changes</td></tr>
+          <tr><td>onRainStart(cb)</td><td>Triggered on rain start</td></tr>
+          <tr><td>onRainStop(cb)</td><td>Triggered on rain stop</td></tr>
+          <tr><td>onExplosion(cb)</td><td>Triggered on explosion</td></tr>
+          <tr><td>onLightning(cb)</td><td>Triggered on lightning</td></tr>
+        </table>
+      </section>
+
+      <section class="docs-section">
+        <h2>🧱 UIBuilder.js + UIStorage.js</h2>
+        <table>
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td>new UIBuilder(title)</td><td>Create new UI</td></tr>
+          <tr><td>.addButton(text, icon?, onClick?)</td><td>Add a button</td></tr>
+          <tr><td>.addInput(label, placeholder?)</td><td>Add text input field</td></tr>
+          <tr><td>.onSubmit(cb)</td><td>Callback on submit</td></tr>
+          <tr><td>.show(player)</td><td>Show UI to player</td></tr>
+          <tr><td>.save(name)</td><td>Save the UI</td></tr>
+          <tr><td>UIBuilder.fromStorage(name)</td><td>Load UI from storage</td></tr>
+          <tr><td>UIStorage.save(name, data)</td><td>Save UI data</td></tr>
+          <tr><td>UIStorage.load(name)</td><td>Load UI data</td></tr>
+          <tr><td>UIStorage.list()</td><td>List all saved UIs</td></tr>
+        </table>
+      </section>
+
+      <section class="docs-section">
+        <h2>🧠 Coming Soon</h2>
+        <table>
+          <tr><th>Module</th><th>Features</th></tr>
+          <tr><td>BlockUtils.js</td><td>Fake blocks, safezones, auto-replace</td></tr>
+          <tr><td>EntityUtils.js</td><td>Auto-follow, glow, name highlights</td></tr>
+          <tr><td>UIEditor.js</td><td>Drag & Drop GUI Builder</td></tr>
+        </table>
+      </section>
+
+      <section class="docs-section">
+        <h2>📌 Quick Start</h2>
+        <p>Install the Folder and put it into the Script Folder</p>
+      </section>
+        <section class="docs-section">
+            <h2>📦 Full Example – Command + UI + Event</h2>
+            <div class="code-box">
+              <button class="copy-btn" onclick="copyToClipboard(document.getElementById('code-full-example').innerText)">📋</button>
+              <pre><code id="code-full-example" class="language-javascript">import { setItemUse, SimpleFormBuilder } from "./GravelLib/formLib/form";
+          import { commandBuilder, PlayerEvents, player } from "./GravelLib/player/player";
+          import { world } from "@minecraft/server";
+          import { PlayerFeatures } from "./GravelLib/player/playerFeatures";
+          import { InventoryUtils } from "./GravelLib/Utils/inventoryUtils";
+          
+          function wasup(event) {
+            const player = event.source; 
+            const test = new SimpleFormBuilder();
+            test.setTitle("test")
+            test.addButton("test", "textures/items/diamond");
+            test.show(player).then(res => {
+              if (res === null) return; // Player closed the form
+              if (res === 0) { // First button selected
+                InventoryUtils.remove(player,"minecraft:clock", "1"); // Remove 1 clock from inventory / or put int 
+                InventoryUtils.replaceItem(player,1,"minecraft:dirt"); // Replace item in slot 1 with dirt
+              }
+            });
+          }
+          
+          commandBuilder.setHelp(true, true);
+          
+          commandBuilder("hello", "Say hello")
+            .run((player, args) => {
+              player.sendMessage("§aHello " + player.name + "!");
+            });
+          
+          // Allow all blocks starting with "minecraft:torch"
+          PlayerEvents.setGlobalPlaceRule(true, ["minecraft:torch*"]);
+          
+          // Allow breaking only exact "minecraft:stone"
+          PlayerEvents.setGlobalBreakRule(true, ["minecraft:stone"]);
+          
+          world.afterEvents.itemUse.subscribe(event => {
+            const { source } = event;
+            setItemUse(source, wasup, "minecraft:clock")
+          });</code></pre>
+            </div>
+          </section>
+          
+      <!-- Weitere Sections folgen -->
+    </main>
+  </div>
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.style.width = bubble.style.height = Math.random() * 80 + 20 + 'px';
+      bubble.style.left = Math.random() * 100 + '%';
+      bubble.style.top = Math.random() * 100 + 'vh';
+      document.body.appendChild(bubble);
+    }
+  </script>
+</body>
+</html>
