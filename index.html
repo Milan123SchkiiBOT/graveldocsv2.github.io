@@ -266,6 +266,45 @@ th {
     margin-right: 0.5rem;
   }
 }
+.notice {
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border-left: 4px solid;
+  position: relative;
+}
+
+.notice strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.notice.warning {
+  background-color: #fff8e1;
+  border-color: #ffb300;
+  color: #5d4037;
+}
+
+.notice.tip {
+  background-color: #e8f5e9;
+  border-color: #66bb6a;
+  color: #2e7d32;
+}
+
+.notice.info {
+  background-color: #e3f2fd;
+  border-color: #42a5f5;
+  color: #1565c0;
+}
+
+.notice.error {
+  background-color: #ffebee;
+  border-color: #ef5350;
+  color: #c62828;
+}
 
   </style>
 </head>
@@ -321,9 +360,19 @@ th {
           <tr><td>PlayerUtils.forceSneak(player)</td><td>Forces sneaking</td></tr>
           <tr><td>PlayerUtils.respawn(player)</td><td>Force player respawn</td></tr>
           <tr><td>PlayerUtils.getLookingBlock(player, maxDistance)</td><td>Block player is looking at</td></tr>
-          <tr><td>Player.onJoin(callback)</td><td>If player joins</td></tr>
-          <tr><td>Player.onHit(callback)</td><td>player hit</td></tr>
-          <tr><td>Player.onLeave(callback)</td><td>If the player leave</td></tr>
+          <tr><td>player.onJoin(callback)</td><td>If player joins</td></tr>
+          <tr><td>player.onHit(callback)</td><td>player hit</td></tr>
+          <tr><td>player.onLeave(callback)</td><td>If the player leave</td></tr>
+          <div class="notice warning">
+            <strong>WARNING</strong>
+            put the events into system.runInterval, or in functions with the module player
+          </div>
+          <div class="notice tip">
+            <strong>TIP</strong>
+            Put this int system.runInterval(() => { for (const player of allPlayers()) { ... } }) <br>
+            And import { allPlayers, Player } from "./GravelLib/player/player";
+          </div>
+          
         </table>
       </section>
       <section class="docs-section">
@@ -344,6 +393,10 @@ th {
           <tr><td>InventoryUtils.getAll(player)</td><td>Returns all inventory items</td></tr>
           <tr><td>InventoryUtils.count(player, typeId)</td><td>Counts specific item</td></tr>
           <tr><td>InventoryUtils.remove(player, typeId, amount)</td><td>Removes item amount</td></tr>
+          <div class="notice tip">
+            <strong>TIP</strong>
+            import { InventoryUtils } from "./GravelLib/Utils/inventoryUtils";
+          </div>
         </table>
       </section>
 
@@ -356,6 +409,10 @@ th {
           <tr><td>onRainStop(cb)</td><td>Triggered on rain stop</td></tr>
           <tr><td>WorldEvents.onExplosion((z) => {})</td><td>Triggered on explosion</td></tr>
           <tr><td>WorldEvents.onLightning((z) => {})</td><td>Triggered on lightning</td></tr>
+          <div class="notice tip">
+            <strong>TIP</strong>
+            import { WorldEvents } from "./GravelLib/Utils/worldEvents";
+          </div>
         </table>
       </section>
 
@@ -393,42 +450,56 @@ th {
             <div class="code-box">
               <button class="copy-btn" onclick="copyToClipboard(document.getElementById('code-full-example').innerText)">📋</button>
               <pre><code id="code-full-example" class="language-javascript">import { setItemUse, SimpleFormBuilder } from "./GravelLib/formLib/form";
-          import { commandBuilder, PlayerEvents, player } from "./GravelLib/player/player";
-          import { world } from "@minecraft/server";
-          import { PlayerFeatures } from "./GravelLib/player/playerFeatures";
-          import { InventoryUtils } from "./GravelLib/Utils/inventoryUtils";
-          
-          function wasup(event) {
-            const player = event.source; 
-            const test = new SimpleFormBuilder();
-            test.setTitle("test")
-            test.addButton("test", "textures/items/diamond");
-            test.show(player).then(res => {
-              if (res === null) return; // Player closed the form
-              if (res === 0) { // First button selected
-                InventoryUtils.remove(player,"minecraft:clock", "1"); // Remove 1 clock from inventory / or put int 
-                InventoryUtils.replaceItem(player,1,"minecraft:dirt"); // Replace item in slot 1 with dirt
-              }
-            });
-          }
-          
-          commandBuilder.setHelp(true, true);
-          
-          commandBuilder("hello", "Say hello")
-            .run((player, args) => {
-              player.sendMessage("§aHello " + player.name + "!");
-            });
-          
-          // Allow all blocks starting with "minecraft:torch"
-          PlayerEvents.setGlobalPlaceRule(true, ["minecraft:torch*"]);
-          
-          // Allow breaking only exact "minecraft:stone"
-          PlayerEvents.setGlobalBreakRule(true, ["minecraft:stone"]);
-          
-          world.afterEvents.itemUse.subscribe(event => {
-            const { source } = event;
-            setItemUse(source, wasup, "minecraft:clock")
-          });</code></pre>
+import { setItemUse, SimpleFormBuilder,setCurrency  } from "./GravelLib/formLib/form";
+import { commandBuilder, allPlayers, Player } from "./GravelLib/player/player";
+import { world, system } from "@minecraft/server"
+import { PlayerFeatures } from "./GravelLib/player/playerFeatures";
+import { InventoryUtils } from "./GravelLib/Utils/inventoryUtils";
+import { EntityEvents } from "./GravelLib/Utils/entityUtils";
+import { WorldEvents } from "./GravelLib/Utils/worldEvents";
+                
+setCurrency("level")
+                
+function wasup(event) {
+    const player = event.source; 
+                    
+    const test = new SimpleFormBuilder();
+    test.setTitle("test")
+    test.addButton("test", "textures/items/diamond");
+    test.show(player).then(res => {
+        if (res === null) return;
+        if (res === 0) {
+        InventoryUtils.remove(player,"minecraft:clock", "1")
+        InventoryUtils.replaceItem(player,1,"minecraft:dirt")
+        }
+    });
+}
+                
+commandBuilder.setHelp(true, true)
+EntityEvents.Spawn("minecraft:zombie", (z) => {
+    world.sendMessage(`Zombie spawned at ${z.location.x}, ${z.location.z}`);
+});
+                  
+                  
+commandBuilder("hello", "Sagt Hallo")
+    .run((player, args) => {
+    player.sendMessage("§aHello " + player.name + "!");
+});
+system.runInterval(() => {
+for (const player of allPlayers()) {
+    player.onJoin(() => {
+    });
+                  
+    player.onMove((p, last) => {
+         p.sendMessage("§7Moving " + Math.floor(last.x));
+    });
+    }
+})
+world.afterEvents.itemUse.subscribe(event => {
+    const { source } = event;
+                
+    setItemUse(source, wasup, "minecraft:clock")
+})</code></pre>
             </div>
           </section>
           
