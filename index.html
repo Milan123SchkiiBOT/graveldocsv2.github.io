@@ -15,6 +15,9 @@ body.dark {
   background: #0a0a0a;
   color: #e0e0e0;
 }
+code {
+    font-family: Arial, Helvetica, sans-serif;
+}
 body.dark table,
 body.dark th,
 body.dark td {
@@ -35,7 +38,9 @@ body.dark .sidebar {
   background: #111;
   border-color: #333;
 }
-
+body.dark .code-box {
+    color: #00aeff;
+}
 body.dark .repo-box,
 body.dark .docs-section,
 body.dark .code-box {
@@ -435,13 +440,14 @@ body.dark #themeToggle:hover {
   <header>
     <h1>GravelScript Library</h1>
     <nav>
-      <a href="#"></a>
+      <a href="https://github.com/IMvampireXD/Script-API-Utilities">Script-API-Utilities</a>
       <a href="#"></a>
       <a href="#"></a>
     </nav>
     <button id="themeToggle" title="Toggle Theme">🌞</button>
   </header>
   <div class="layout">
+    
     <aside class="sidebar">
       <h3>Sections</h3>
       <ul>
@@ -454,43 +460,343 @@ body.dark #themeToggle:hover {
         <li><i class="material-icons">folder</i> Coming Soon</li>
       </ul>
     </aside>
+    
     <main class="content">
+
       <section class="repo-box">
         <div class="repo-header">
           <h2>📁 GravelLib Folder</h2>
           <a href="./GravelLib.zip" download><button class="download-btn">Download Folder</button></a>
         </div>
         <div class="entry"><span><i class="material-icons">folder</i> builder/</span></div>
+        <div class="entry"><span><i class="material-icons">folder</i> databse/</span></div>
         <div class="entry"><span><i class="material-icons">folder</i> formLib/</span></div>
         <div class="entry"><span><i class="material-icons">folder</i> player/</span></div>
         <div class="entry"><span><i class="material-icons">folder</i> Utils/</span></div>
        
       </section>
-      <section class="docs-section">
-        <h2>📚 PlayerUtils.js</h2>
-        <table>
-          <tr><th>Function</th><th>Description</th></tr>
-          <tr><td>PlayerUtils.getHeldItem(player)</td><td>Returns the held item</td></tr>
-          <tr><td>PlayerUtils.hasItem(player, typeId, amount?)</td><td>Check if player has item</td></tr>
-          <tr><td>PlayerUtils.disableJump(player)</td><td>Prevents jumping</td></tr>
-          <tr><td>PlayerUtils.forceSneak(player)</td><td>Forces sneaking</td></tr>
-          <tr><td>PlayerUtils.respawn(player)</td><td>Force player respawn</td></tr>
-          <tr><td>PlayerUtils.getLookingBlock(player, maxDistance)</td><td>Block player is looking at</td></tr>
-          <tr><td>player.onJoin(callback)</td><td>If player joins</td></tr>
-          <tr><td>player.onHit(callback)</td><td>player hit</td></tr>
-          <tr><td>player.onLeave(callback)</td><td>If the player leave</td></tr>
-          <div class="notice warning">
-            <strong>WARNING</strong>
-            put the events into system.runInterval, or in functions with the module player
-          </div>
-          <div class="notice tip">
-            <strong>TIP</strong>
-            Put this int system.runInterval(() => { for (const player of allPlayers()) { ... } }) <br>
-            And import { allPlayers, Player } from "./GravelLib/player/player";
-          </div>
-          
+      <div class="notice tip">
+        <strong>Check it out like similiar</strong>
+        Script-API-Utilities <a href="https://github.com/IMvampireXD/Script-API-Utilities">here</a>
+      </div>
+      <section class="docs-section" id="player-wrapper">
+        <h2>🎮 Player Wrapper API</h2>
+      
+        <div class="notice warning">
+          <strong>⚠️ WARNING</strong>
+          <p>This API must be used inside <code>system.runInterval</code> or player-specific loops to ensure proper timing and access to player state.</p>
+        </div>
+      
+        <div class="notice tip">
+          <strong>💡 TIP</strong>
+          <p>Use a loop like this to handle players efficiently:</p>
+          <pre><code class="language-javascript">const player = <a href="#">PlayerProperties()</a>
+Else you need to replace the player with <a href="#">PlayerProperties()</a>
+          </code></pre>
+        </div>
+      <br>
+        <h3>🧍 Basic Info</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>player.name</code></td>
+              <td>Returns the player's name</td>
+              <td><code>player.name</code></td>
+            </tr>
+            <tr>
+              <td><code>player.id</code></td>
+              <td>Returns the player's unique ID</td>
+              <td><code>player.id</code></td>
+            </tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>🚶 Movement States</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>player.isSneaking</code></td><td>Is the player sneaking</td><td><code>if (player.isSneaking)</code></td></tr>
+            <tr><td><code>player.isSprinting</code></td><td>Is the player sprinting</td><td><code>if (player.isSprinting)</code></td></tr>
+            <tr><td><code>player.isFlying</code></td><td>Is the player flying</td><td><code>if (player.isFlying)</code></td></tr>
+            <tr><td><code>player.isSwimming</code></td><td>Is the player swimming</td><td><code>if (player.isSwimming)</code></td></tr>
+            <tr><td><code>player.isGliding</code></td><td>Is the player gliding with Elytra</td><td><code>if (player.isGliding)</code></td></tr>
+            <tr><td><code>player.isInWater</code></td><td>Is the player in water</td><td><code>if (player.isInWater)</code></td></tr>
+            <tr><td><code>player.isOnGround</code></td><td>Is the player on the ground</td><td><code>if (player.isOnGround)</code></td></tr>
+            <tr><td><code>player.isMoving</code></td><td>Is the player moving</td><td><code>if (player.isMoving)</code></td></tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>📍 Position & Rotation</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>player.position</code></td><td>Returns player location (Vector3)</td><td><code>player.position.x</code></td></tr>
+            <tr><td><code>player.x / y / z</code></td><td>Individual coordinates</td><td><code>player.x</code></td></tr>
+            <tr><td><code>player.rotation</code></td><td>Returns pitch and yaw</td><td><code>player.rotation.yaw</code></td></tr>
+            <tr><td><code>player.pitch</code></td><td>Returns pitch (vertical angle)</td><td><code>player.pitch</code></td></tr>
+            <tr><td><code>player.yaw</code></td><td>Returns yaw (horizontal angle)</td><td><code>player.yaw</code></td></tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>❤️ Health & XP</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>player.health</code></td><td>Current HP</td><td><code>player.health</code></td></tr>
+            <tr><td><code>player.maxHealth</code></td><td>Maximum HP</td><td><code>player.maxHealth</code></td></tr>
+            <tr><td><code>player.hunger</code></td><td>Hunger points</td><td><code>player.hunger</code></td></tr>
+            <tr><td><code>player.saturation</code></td><td>Food saturation</td><td><code>player.saturation</code></td></tr>
+            <tr><td><code>player.exhaustion</code></td><td>Food exhaustion</td><td><code>player.exhaustion</code></td></tr>
+            <tr><td><code>player.experience</code></td><td>XP amount</td><td><code>player.experience</code></td></tr>
+            <tr><td><code>player.level</code></td><td>XP Level</td><td><code>player.level</code></td></tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>🎒 Inventory & Equipment</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>player.inventory</code></td><td>Access to the inventory container</td><td><code>player.inventory.getItem(0)</code></td></tr>
+            <tr><td><code>player.selectedSlot</code></td><td>Currently selected hotbar slot</td><td><code>player.selectedSlot</code></td></tr>
+            <tr><td><code>player.selectedItem</code></td><td>Item in selected hotbar slot</td><td><code>player.selectedItem?.typeId</code></td></tr>
+            <tr><td><code>player.armor</code></td><td>Returns equipped armor</td><td><code>player.armor.head?.typeId</code></td></tr>
+            <tr><td><code>player.offhandItem</code></td><td>Item in offhand slot</td><td><code>player.offhandItem?.typeId</code></td></tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>📊 Stats & Properties</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>player.score</code></td><td>Scoreboard value (custom)</td><td><code>player.score</code></td></tr>
+            <tr><td><code>player.playTime</code></td><td>Time played (dynamic property)</td><td><code>player.playTime += 1</code></td></tr>
+            <tr><td><code>player.lastDeathLocation</code></td><td>Last death coordinates</td><td><code>player.lastDeathLocation?.x</code></td></tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>⚙️ Player State & Privileges</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>player.gameMode</code></td><td>Returns player's game mode</td><td><code>player.gameMode</code></td></tr>
+            <tr><td><code>player.isOp</code></td><td>Checks if player is OP</td><td><code>if (player.isOp)</code></td></tr>
+            <tr><td><code>player.velocity</code></td><td>Player’s velocity vector</td><td><code>player.velocity.x</code></td></tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>🔧 Custom Properties</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>player.customProperties</code></td><td>All stored custom values</td><td><code>player.customProperties.someFlag</code></td></tr>
+          </tbody>
         </table>
       </section>
+      <section class="docs-section" id="inventory-utils">
+        <h2>📦 InventoryUtils.js</h2>
+      
+        <div class="notice warning">
+          <strong>⚠️ WARNING</strong>
+          <p>Inventory operations must be called during correct execution timing (e.g., <code>system.runInterval</code>) to avoid invalid access or crashes.</p>
+        </div>
+      
+        <div class="notice tip">
+          <strong>💡 TIP</strong>
+          <p>Use inventory actions inside intervals:</p>
+          <pre><code class="language-javascript">system.runInterval(() => {
+        for (const p of allPlayers()) {
+          const inv = new InventoryUtils();
+          inv.saveInventory(p);
+        }
+      }, 20);</code></pre>
+        </div>
+      <br>
+        <h3>➕ Item Handling</h3>
+        <table class="function-table">
+          <thead>
+            <tr><th>Method</th><th>Description</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>addItem(player, itemId, amount?, data?)</code></td>
+              <td>Adds an item to a player's inventory. Supports name, lore, enchantments.</td>
+              <td>
+      <pre><code>inv.addItem(player, 'minecraft:diamond', 3, {
+        name: 'Shiny!',
+        lore: ['Rare item'],
+        enchantments: { sharpness: 2 }
+      });</code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>removeItem(player, itemId, amount?)</code></td>
+              <td>Removes a specific item from inventory.</td>
+              <td><code>inv.removeItem(player, 'minecraft:stick', 2);</code></td>
+            </tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>🧱 Item Stack Operations</h3>
+        <table class="function-table">
+          <thead>
+            <tr><th>Method</th><th>Description</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>createItemStack(itemId, amount?, data?)</code></td>
+              <td>Creates a custom ItemStack with optional name, lore, enchants, durability.</td>
+              <td>
+      <pre><code>const stack = inv.createItemStack('minecraft:iron_sword', 1, {
+        name: 'Steel Blade',
+        enchantments: { unbreaking: 3 },
+        durability: 5
+      });</code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>spawnItem(dimension, location, item, amount?)</code></td>
+              <td>Spawns an item into the world at a given position.</td>
+              <td>
+      <pre><code>inv.spawnItem(player.dimension, player.location, 'minecraft:apple', 5);</code></pre>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>✨ Enchantments</h3>
+        <table class="function-table">
+          <thead>
+            <tr><th>Method</th><th>Description</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>enchantItemInSlot(player, slot, enchantmentId, level?)</code></td>
+              <td>Adds a specific enchantment to an item in the selected slot.</td>
+              <td><code>inv.enchantItemInSlot(player, 0, 'sharpness', 2);</code></td>
+            </tr>
+            <tr>
+              <td><code>clearEnchantments(player, slot)</code></td>
+              <td>Removes all enchantments from an item.</td>
+              <td><code>inv.clearEnchantments(player, 1);</code></td>
+            </tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>🧰 Fake Inventory UI</h3>
+        <table class="function-table">
+          <thead>
+            <tr><th>Method</th><th>Description</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>showFakeInventory(player, title, items)</code></td>
+              <td>Shows a chat-based inventory with clickable options (via custom chat formatting).</td>
+              <td>
+      <pre><code>inv.showFakeInventory(player, 'VIP Kits', [
+        { name: 'Starter Kit' },
+        { name: 'Warrior Kit' }
+      ]);</code></pre>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <br>
+        <h3>💾 Inventory Storage</h3>
+        <table class="function-table">
+          <thead>
+            <tr><th>Method</th><th>Description</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>saveInventory(player)</code></td>
+              <td>Saves the player's entire inventory to storage.</td>
+              <td><code>inv.saveInventory(player);</code></td>
+            </tr>
+            <tr>
+              <td><code>loadInventory(player)</code></td>
+              <td>Loads a previously saved inventory for the player.</td>
+              <td><code>inv.loadInventory(player);</code></td>
+            </tr>
+            <tr>
+              <td><code>clearInventory(player)</code></td>
+              <td>Clears all items from a player's inventory.</td>
+              <td><code>inv.clearInventory(player);</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h3>🔒 Private Methods (Internal Use)</h3>
+        <br>
+        <ul>
+          <p><code>_applyEnchantments(itemStack, enchantments)</code> – Applies multiple enchantments to an item.</p>
+          <p><code>_serializeItemStack(item)</code> – Converts item to a storable format.</p>
+          <p><code>_deserializeItemStack(data)</code> – Converts back from storage to ItemStack.</p>
+          <p><code>_getEnchantments(item)</code> – Returns a plain object of enchantments on the item.</p>
+        </ul>
+        <br>
+        <h3>✅ Example Usage</h3>
+        <div class="code-box">
+            <button class="copy-btn" onclick="copyToClipboard(document.getElementById('code-full-example').innerText)">📋</button>
+            <pre><code id="code-full-example" class="language-javascript">const inv = new InventoryUtils();
+      
+inv.addItem(player, 'minecraft:diamond', 3, {
+    name: 'Shiny!',
+    lore: ['Very cool!']
+});
+      
+inv.enchantItemInSlot(player, 0, 'sharpness', 2);
+inv.saveInventory(player);</code></pre></div>
+      </section>
+      
       <section class="docs-section">
         <h2>📚 EntityUtils.js</h2>
         <table>
@@ -500,22 +806,111 @@ body.dark #themeToggle:hover {
           <tr><td>EntityEvents.Death("minecraft:entity", (z) => { ... })</td><td>If Entity Death</td></tr>
         </table>
       </section>
-      <section class="docs-section">
-        <h2>📦 InventoryUtils.js</h2>
-        <table>
-          <tr><th>InventoryUtils.Function</th><th>Description</th></tr>
-          <tr><td>InventoryUtils.clear(player)</td><td>Clears player inventory</td></tr>
-          <tr><td>InventoryUtils.replaceItem(player, slot, itemStack)</td><td>Replaces item in slot</td></tr>
-          <tr><td>InventoryUtils.getAll(player)</td><td>Returns all inventory items</td></tr>
-          <tr><td>InventoryUtils.count(player, typeId)</td><td>Counts specific item</td></tr>
-          <tr><td>InventoryUtils.remove(player, typeId, amount)</td><td>Removes item amount</td></tr>
-          <div class="notice tip">
-            <strong>TIP</strong>
-            import { InventoryUtils } from "./GravelLib/Utils/inventoryUtils";
-          </div>
+      <section class="docs-section" id="command-builder">
+        <h2>🛠️ CommandBuilder.js</h2>
+      
+        <div class="notice warning">
+          <strong>⚠️ WARNING</strong>
+          <p>Call <code>commandBuilder.toggle(true)</code> during initialization to activate chat-based commands.</p>
+        </div>
+      
+        <div class="notice tip">
+          <strong>💡 TIP</strong>
+          <p>All commands use a custom prefix (default: <code>!</code>), and are handled via <code>chatSend</code> events.</p>
+        </div>
+      <br>
+        <h3>⚙️ Setup</h3>
+        <div class="code-box">
+            <button class="copy-btn" onclick="copyToClipboard(document.getElementById('code-full-example').innerText)">📋</button>
+            <pre><code id="code-full-example" class="language-javascript">import { commandBuilder } from './commandBuilder';
+      
+      commandBuilder.toggle(true);
+      
+      commandBuilder.register("hello", {
+        description: "Say hello",
+        usage: "!hello",
+        execute(player) {
+          player.sendMessage("Hello there!");
+        },
+      });</code></pre></div>    
+      <br>
+        <h3>🔧 API Methods</h3>
+        <table class="function-table">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>commandBuilder.toggle(enabled?)</code></td>
+              <td>Enables or disables command handling globally.</td>
+              <td><code>commandBuilder.toggle(true);</code></td>
+            </tr>
+            <tr>
+              <td><code>commandBuilder.register(name, options)</code></td>
+              <td>Registers a new command with name, description, usage, aliases, and an execute function.</td>
+              <td>
+                <div class="code-box">
+                    <button class="copy-btn" onclick="copyToClipboard(document.getElementById('code-full-example').innerText)">📋</button>
+                    <pre><code id="code-full-example" class="language-javascript">commandBuilder.register(\"tp\", {
+        description: \"Teleport to coordinates\",
+        usage: \"!tp <x> <y> <z>\",
+        aliases: [\"teleport\"],
+        execute(player, args) {
+          const [x, y, z] = args.map(Number);
+          player.teleport({ x, y, z });
+        }
+      });</code></pre></div>
+              </td>
+            </tr>
+            <tr>
+              <td><code>commandBuilder.getAll()</code></td>
+              <td>Returns an array of all registered command objects.</td>
+              <td><code>const allCommands = commandBuilder.getAll();</code></td>
+            </tr>
+          </tbody>
         </table>
+      <br>
+        <h3>✅ Example Command</h3>
+        <div class="code-box">
+            <button class="copy-btn" onclick="copyToClipboard(document.getElementById('code-full-example').innerText)">📋</button>
+            <pre><code id="code-full-example" class="language-javascript">commandBuilder.register("ping", {
+        description: "Responds with pong",
+        usage: "!ping",
+        execute(player) {
+          player.sendMessage("Pong!");
+        },
+      });</code></pre></div>
+      <br>
+        <h3>📚 Help Command</h3>
+        <div class="code-box">
+            <button class="copy-btn" onclick="copyToClipboard(document.getElementById('code-full-example').innerText)">📋</button>
+            <pre><code id="code-full-example" class="language-javascript">commandBuilder.register("help", {
+        description: "Lists all available commands",
+        usage: "!help",
+        execute(player) {
+          const commands = commandBuilder.getAll();
+          const list = commands.map(c => `§e${c.usage} §7- ${c.description}`).join(\"\\n\");
+          player.sendMessage(\"§6Available Commands:\\n\" + list);
+        }
+      });</code></pre></div>
+      <br>
+        <h3>🧪 Parsing Example</h3>
+        <p>If a player types:</p>
+        <div class="code-box">
+            <button class="copy-btn" onclick="copyToClipboard(document.getElementById('code-full-example').innerText)">📋</button>
+            <pre><code id="code-full-example" class="language-javascript">!tp 100 64 200</code></pre></div>
+        <p>This is parsed as:</p>
+        <ul>
+          <p><strong>  Command:</strong> <code>tp</code></p>
+          <p><strong>  Arguments:</strong> <code>[\"100\", \"64\", \"200\"]</code></p>
+        </ul>
+        <p>The <code>execute(player, args)</code> function is then called with the arguments array.</p>
       </section>
-
+      
       <section class="docs-section">
         <h2>🌍 WorldEvents.js</h2>
         <table>
@@ -531,7 +926,7 @@ body.dark #themeToggle:hover {
           </div>
         </table>
       </section>
-
+<!-- https://github.com/IMvampireXD/Script-API-Utilities -->
       <section class="docs-section">
         <h2>🧱 UIBuilder.js + UIStorage.js</h2>
         <table>
