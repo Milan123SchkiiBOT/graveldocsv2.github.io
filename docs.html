@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realm Database - Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.jpg" alt="RYOS Logo">
+                <span>Realm Database</span>
+            </div>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-bolt"></i> Docs</a></li>
+                    <li><a href="#"><i class="fas fa-star"></i> Showcase</a></li>
+                </ul>
+            </nav>
+            <button class="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    <div id="customContextMenu" class="custom-context-menu">
+        <ul>
+            <li id="contextMenuCopy">Copy</li>
+            <li id="contextMenuSearch">Search</li>
+        </ul>
+    </div>
+    <div id="searchOverlay" class="search-overlay">
+    <div class="search-panel">
+        <input type="text" id="searchInput" placeholder="Search documentation..." autocomplete="off">
+        <button id="closeSearchBtn" class="close-search-btn"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="searchResultsCount" class="search-results-count"></div>
+</div>
+    <div class="docs-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="logo.jpg" alt="RYOS Logo">
+                    <span>Docs</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="category-item active">
+                        <a href="#getting-started" class="category-link active">
+                            <i class="fas fa-play-circle"></i> Getting Started
+                        </a>
+                        <ul class="submenu active">
+                            <li><a href="#welcome">Welcome</a></li>
+                            <li><a href="#installation">Installation Guide</a></li>
+                            <li><a href="#first-script">Your First Script</a></li>
+                        </ul>
+                    </li><!--
+                    <li class="category-item">
+                        <a href="#examples" class="category-link">
+                            <i class="fas fa-lightbulb"></i> Examples
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#basic-script">Basic Script</a></li>
+                            <li><a href="#ui-creation">UI Creation</a></li>
+                            <li><a href="#event-handling">Event Handling</a></li>
+                        </ul>
+                    </li>-->
+                     <li class="category-item">
+                        <a href="#faq" class="category-link">
+                            <i class="fas fa-question-circle"></i> FAQ
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#general-faq">General Questions</a></li>
+                            <li><a href="#troubleshooting-faq">Troubleshooting</a></li>
+                        </ul>
+                    </li>
+                     <li class="category-item">
+                        <a href="#setup" class="category-link">
+                            <i class="fas fa-wrench"></i> Setup
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#system-requirements">System Requirements</a></li>
+                            <li><a href="#common-issues">Common Setup Issues</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <section id="getting-started" class="docs-section active">
+                <div class="section-header">
+                    <h2>Getting Started</h2>
+                    <p>Start creating own UIs and other things!</p>
+                </div>
+
+                <article id="welcome" class="docs-article">
+                    <h3>Welcome to Realm Database</h3>
+                    <p>This will be the best Database ever!</p>
+                </article>
+
+                <article id="installation" class="docs-article">
+                    <h3>Installation Guide</h3>
+                    <p>Follow these simple steps to use Realm Database.</p>
+                    <h4>Step 1: Download the Folder</h4>
+                    <p>Download the latest version of Ralm Database in <a href="#" class="inline-link">Download page</a>. Remember this project made with <span class="highlight-text">EasyAPI</span></p>
+                    <div class="code-example">
+                        <div class="editor-header">
+                            <div class="dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span>main.js</span>
+                        </div>
+                        <pre class="code-content">
+
+                            <code>
+    import { uiDB, uiManager } from "./@easy/uiManager.js";
+    import { world } from "@minecraft/server";
+    import { uiBuilder } from './@easy/uiBuilder';
+                            </code>
+                        </pre>
+                    </div>
+                </article>
+
+                 <article id="first-script" class="docs-article">
+                    <h3>Your First Script</h3>
+                    <p>Let's write a simple UI.</p>
+                    <div class="code-example">
+                        <div class="editor-header">
+                            <div class="dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span>main.js</span>
+                        </div>
+                        <pre class="code-content">
+
+                            <code>
+    import { uiDB, uiManager } from "./@easy/uiManager.js";
+    import { world } from "@minecraft/server";
+    import { uiBuilder } from './@easy/uiBuilder';
+
+    uiManager.registerUIs("testmeow|Leaf/testmeow"); // Register the UI
+    uiManager.registerBuilder(uiDB.uis.testmeow, "§e", (player) => { // Please ignore the §e
+        return new UI("§e") // Here too
+            .setTitle("Meow UI")
+            .addHeader("§l§eTest UI")
+            .addLabel("§7This is a test UI with an item icon on a button.")
+            .addLabel("This is a test UI with an item icon on a button.")
+            .addButton("gravel", "minecraft:stone", "middle", false)
+            .setAction(player, (res) => {
+            if (res.canceled)
+                return;
+            if (res.selection === 0) {
+                player.sendMessage("You pressed the gravel button!");
+            }
+        });
+    });
+                            </code>
+                        </pre>
+                    </div>
+                    <p>Save this and try it on Minecraft.</p>
+                </article>
+            </section>
+
+            <section id="api-reference" class="docs-section">
+                <div class="section-header">
+                    <h2>API Reference</h2>
+                    <p>Detailed documentation for all available EasyAPI.</p>
+                </div>
+                <article id="executor-api" class="docs-article">
+                    <h3>Executor API</h3>
+                    <p>The core API for script execution and console interaction.</p>
+                    <h4>`executor.print(value)`</h4>
+                    <p>Prints a value to the RYOS console.</p>
+                    <div class="code-example">
+                        <div class="editor-header">
+                            <div class="dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span>executor_print_example.lua</span>
+                        </div>
+                        <pre class="code-content">
+<span class="line-numbers">1</span><span class="line-numbers">2</span><span class="line-numbers">3</span>
+                            <code>
+executor.print("This is a message.")
+executor.print(123)
+executor.print(true)
+                            </code>
+                        </pre>
+                    </div>
+                </article>
+                <article id="uimanager-api" class="docs-article">
+                    <h3>UIManager API</h3>
+                    <p>Provides functions to create and manage in-game user interfaces.</p>
+                    <div class="code-example">
+                        <div class="editor-header">
+                            <div class="dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span>ui_manager_example.ts</span>
+                        </div>
+                        <pre class="code-content">
+<span class="line-numbers">1</span><span class="line-numbers">2</span><span class="line-numbers">3</span><span class="line-numbers">4</span><span class="line-numbers">5</span><span class="line-numbers">6</span><span class="line-numbers">7</span><span class="line-numbers">8</span><span class="line-numbers">9</span><span class="line-numbers">10</span><span class="line-numbers">11</span><span class="line-numbers">12</span><span class="line-numbers">13</span><span class="line-numbers">14</span><span class="line-numbers">15</span>
+                            <code>
+// Example using UIManager (TypeScript-like)
+uiDB.registerUIs("TestMenu | test/menu");
+
+uiManager.registerBuilder(uiDB.uis.test.menu,
+    (response, player) => {
+        switch (response.selection) {
+            case 0:
+                player.sendMessage("S");
+                break;
+            case 1:
+                player.sendMessage("W");
+                break;
+        }
+    }
+);
+                            </code>
+                        </pre>
+                    </div>
+                     <div class="bubble-animation-container">
+                        <div class="bubble bubble-6"></div>
+                        <div class="bubble bubble-7"></div>
+                        <div class="bubble bubble-8"></div>
+                    </div>
+                </article>
+                <article id="player-api" class="docs-article">
+                    <h3>Player API</h3>
+                    <p>Access player-specific information and actions.</p>
+                    <h4>`player.getName()`</h4>
+                    <p>Returns the name of the current player.</p>
+                    <h4>`player.sendMessage(message)`</h4>
+                    <p>Sends a message to the player.</p>
+                </article>
+            </section>
+
+            <section id="examples" class="docs-section">
+                <div class="section-header">
+                    <h2>Examples</h2>
+                    <p>Practical examples to help you understand RYOS capabilities.</p>
+                </div>
+                <article id="basic-script" class="docs-article">
+                    <h3>Basic Script Example</h3>
+                    <p>A more complex script demonstrating variable usage and conditional logic.</p>
+                    <div class="code-example">
+                        <div class="editor-header">
+                            <div class="dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span>complex_logic.lua</span>
+                        </div>
+                        <pre class="code-content">
+
+                            <code>
+local num = 10
+local result = ""
+
+if num > 5 then
+    result = "Number is greater than 5"
+else
+    result = "Number is 5 or less"
+end
+
+executor.print(result)
+
+-- Another example
+local condition = true
+if condition then executor.print("Condition met!") end
+                            </code>
+                        </pre>
+                    </div>
+                </article>
+                <article id="ui-creation" class="docs-article">
+                    <h3>UI Creation Example</h3>
+                    <p>An example of creating a simple UI with buttons.</p>
+                     <div class="code-example">
+                        <div class="editor-header">
+                            <div class="dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span>simple_ui.ts</span>
+                        </div>
+                        <pre class="code-content">
+                            <code>
+uiDB.registerUIs("MyMenu | MainMenu");
+
+uiManager.registerBuilder(uiDB.uis.MainMenu,
+    uiBuilder.action.button("Click Me"),
+    uiBuilder.action.button("Close Menu")
+);
+
+-- When "Click Me" is pressed, a response can be handled.
+-- This part would typically be handled in the builder's response function.
+                            </code>
+                        </pre>
+                    </div>
+                </article>
+            </section>
+
+            <section id="faq" class="docs-section">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Find answers to common questions about Realm Database.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">What is Realm Database? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>Database the makes everything easier and store everything in a Database.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Is Realm Database open source?? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>Yes, but you need to credit me.</p>
+                    </div>
+                </div>
+
+                 <div class="faq-item">
+                    <h3 class="faq-question">How often is Realm Creator Updated? <i class="fas fa-chevron-down"></i></h3>
+                    <div class="faq-answer">
+                        <p>Every month or two months, this project is just for fun.</p>
+                    </div>
+                </div>
+            </section>
+
+             <section id="setup" class="docs-section">
+                <div class="section-header">
+                    <h2>Setup Guide</h2>
+                    <p>Detailed instructions for common issues.</p>
+                </div>
+
+                <article id="system-requirements" class="docs-article">
+                    <h3>System Requirements</h3>
+                    <ul>
+                        <li>Need Minecraft Bedrock Edition</li>
+                        <li>Code Edtior, please use Visual Studio Code</li>
+
+                    </ul>
+                </article>
+
+                <article id="common-issues" class="docs-article">
+                    <h3>Common Setup Issues</h3>
+                    <h4>Why is this not working</h4>
+                    <p>Please check your manifest file and make sure its on 2.0.0-beta and higher</p>
+                    <h4>Errors</h4>
+                    <p>I'm not the best coder and this Libary can have many issues, most are playerDB issues, where aware of many erros and trying to fix the errors.</p>
+                </article>
+            </section>
+
+
+        </main>
+    </div>
+<div id="bubble-container"></div>
+    <script src="script1.js"></script>
+</body>
+</html>
